@@ -43,7 +43,7 @@ function unifyTerms(tokens) {
                 lastType = "non-operator";
             }
         }
-
+        
         unified.push(token);
     }
 
@@ -114,6 +114,7 @@ function arrangeByOperation(tokens, operation) {
                 operation.symbol.indexOf(token.value)
             ];
 
+            if(lastToken.type === "group") lastToken.contents = arrangeOperations(lastToken.contents);
             if(nextToken.type === "group") nextToken.contents = arrangeOperations(nextToken.contents);
             arranged.push({ type: "operation", operation: operationName, contents: [ lastToken, nextToken ] });
 

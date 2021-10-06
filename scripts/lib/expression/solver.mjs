@@ -70,12 +70,12 @@ function solveOperation({ operation, contents }, variables) {
 
 /// UNIT TEST
 function test() {
-    const expression = "2a + b";
+    const expression = "(3a^2 - 2b)/(4a - 3b^3) + 8";
     const solution = solveExpression(expression, {
         a: 2, b: 1
     });
 
-    console.log(`${expression} = ${solution}`);
+    console.log(`${expression} = ${solution}\n`);
 }
 
 test();
