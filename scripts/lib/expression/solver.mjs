@@ -1,20 +1,12 @@
 /* Written 10.06.21 */
 
-import { arrangeOperations } from "./emdas.mjs";
-import { groupTokens } from "./group.mjs";
-import { parseExpression } from "./parser.mjs";
-
 /** 
  * Solves string expression
- * @param {string} expression
+ * @param {{type: "group", contents: any[]}} expression
  * @param {any} variables
  */
-export function solveExpression(expression, variables = {}) {
-    const tokens = parseExpression(expression);
-    const grouped = groupTokens(tokens);
-    const finalExpression = arrangeOperations(grouped);
-
-    const solution = solveToken(finalExpression[0], variables);
+export function solveExpression(root_token, variables = {}) {
+    const solution = solveToken(root_token, variables);
     return solution;
 }
 
@@ -78,4 +70,4 @@ function test() {
     console.log(`${expression} = ${solution}\n`);
 }
 
-test();
+// test();
