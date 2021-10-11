@@ -1,29 +1,23 @@
 import { plotGraphPoints } from "./lib/graph/plotter.mjs";
+import { Graph } from "./lib/structures/Graph.mjs";
 import { GraphingCanvas } from "./lib/structures/GraphingCanvas.mjs";
+import { GraphsManager } from "./lib/structures/GraphsManager.mjs";
 import { SolvableExpression } from "./lib/structures/SolvableExpression.mjs";
 
+const manager = new GraphsManager();
 const canvas = document.getElementById("graph-canvas");
-const graphingCanvas = new GraphingCanvas({ canvas });
 
-const expression = SolvableExpression.fromString("x^2 - 2");
-const points = plotGraphPoints({ expression, config: {
-    bounds: { x1: -10, x2: 10 }, frequency: 500
-} });
+manager.initialize({ canvas });
 
-graphingCanvas.update({
-    gridValues: {
-        x: [ -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5 ],
-        y: [ -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5 ],
-    },
-    graphs: [ { points, color: "#ff0000" } ]
-});
+const expression = SolvableExpression.fromString("x^4 + 5x^3 + 3x^2 + 2x");
+// manager.graphs.push(new Graph({ expression, color: "#ff0000" }));
 
-
+manager.grapher.render();
 
 document.getElementById("btn-zoomin").onclick = function() {
-    graphingCanvas.update({ scale: graphingCanvas.scale*1.2 });
+    manager.view.zoomIn();
 }
 
 document.getElementById("btn-zoomout").onclick = function() {
-    graphingCanvas.update({ scale: graphingCanvas.scale/1.2 });
+    manager.view.zoomOut();
 }

@@ -18,6 +18,6 @@ export class Graph {
 
     plotFromXBounds(x1, x2) {
         return plotGraphPoints({ expression: this.expression, 
-            config: { bounds: {x1, x2}, frequency: 1000 } });
+            config: { bounds: {x1, x2}, frequency: 500 } });
     }
 }

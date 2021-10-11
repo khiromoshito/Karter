@@ -58,7 +58,7 @@ export function getGridXYValues({x1, x2, y1, y2}) {
     const averageFrequency = 10;
 
     // The specific range where interval is 1
-    const scaleBase = 10;
+    const scaleBase = 8;
 
     // Distances between grid lines
     const interval = Math.floor(maxRange / scaleBase);

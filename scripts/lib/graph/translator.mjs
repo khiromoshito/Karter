@@ -11,8 +11,8 @@ export function translatePoint(point, { offset, canvasHeight, canvasWidth, scale
 export function translateX(x, { offsetX, canvasWidth, scale }) {
     const relativeX = (x - offsetX)*scale;
     return relativeX + canvasWidth/2;
-
 }
+
 export function translateY(y, { offsetY, canvasHeight, scale }) {
     const relativeY = (y - offsetY)*scale;
     return -relativeY + canvasHeight/2;
