@@ -1,4 +1,5 @@
 import { $, makeDivElement, makeInputElement } from "../../utils/element.mjs";
+import { FunctionItemView } from "./FunctionItemView.mjs";
 import { FunctionsManager } from "./FunctionsManager.mjs";
 
 export class FunctionsInterfaceController {
@@ -21,20 +22,21 @@ export class FunctionsInterfaceController {
     }
 
     addFunction() {
-        const functionItemView = {
-            wrapper: makeDivElement({ className: "function-item-wrapper" }),
-            input: makeInputElement({ className: "function-item-input" })
-        };
-
         const functionItem = this.manager.addFunction();
 
-        functionItemView.input.addEventListener("input", () => {
-            const content = functionItemView.input.value;
-            functionItem.updateContent(content);
+        const functionItemView = new FunctionItemView({
+            onDelete: () => {
+                console.log("A function is bound to be deleted");
+                this.onUpdate();
+            },
+            onInput: (content) => {
+                functionItem.graph.expression.updateExpression(content);
+                console.log(`A function has updated its content: ${content}`);
+                this.onUpdate();
+            }
         });
 
-        functionItemView.wrapper.append(functionItemView.input);
-        this.views.listContainer.appendChild(functionItemView.wrapper);
+        this.views.listContainer.appendChild(functionItemView.element);
     }
 }
 
