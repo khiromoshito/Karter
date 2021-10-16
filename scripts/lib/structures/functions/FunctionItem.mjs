@@ -3,29 +3,29 @@ import { Graph } from "../Graph.mjs";
 import { SolvableExpression } from "../SolvableExpression.mjs";
 
 export class FunctionItem {
-    constructor({ onUpdate }) {
+
+    /** @private */
+    static idCounter = 0;
+
+    constructor() {
+        this.id = FunctionItem.idCounter++;
         this.content = "";
         this.isVisible = true;
         this.color = pickRandomColor();
         this.graph = new Graph({ expression: SolvableExpression.fromString(""), color: this.color });
-
-        this.onUpdate = onUpdate;
     }
 
     updateColor(color) {
         this.color = color;
         this.graph.color = color;
-        this.onUpdate();
     }
 
     updateContent(content) {
         this.content = content;
         this.graph.expression.updateExpression(content);
-        this.onUpdate();
     }
 
     toggleVisibility() {
         this.isVisible = !this.isVisible;
-        this.onUpdate();
     }
 }

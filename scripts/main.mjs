@@ -1,5 +1,4 @@
+import { AppController } from "./lib/structures/AppController.mjs";
 import { FunctionsInterfaceController } from "./lib/structures/functions/FunctionsInterfaceController.mjs";
 
-
-
-const functionsController = new FunctionsInterfaceController({ onUpdate: () => console.log("CHAAANGEEEESSS")});
+const controller = new AppController();

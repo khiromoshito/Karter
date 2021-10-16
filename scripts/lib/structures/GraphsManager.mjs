@@ -16,6 +16,10 @@ export class GraphsManager {
 
     }
 
+    get graphs() {
+        
+    }
+
     initialize({ canvas }) {
         this.grapher.canvas = canvas;
     }

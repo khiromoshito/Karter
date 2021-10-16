@@ -1,12 +1,13 @@
 import { $, makeDivElement, makeInputElement } from "../../utils/element.mjs";
 import { FunctionItemView } from "./FunctionItemView.mjs";
-import { FunctionsManager } from "./FunctionsManager.mjs";
 
 export class FunctionsInterfaceController {
 
-    constructor({ onUpdate }) {
-        this.onUpdate = onUpdate || (() => {});
-        this.manager = new FunctionsManager({ onUpdate: () => this.onUpdate() });
+    constructor({ onUpdate, onAddFunction }) {
+        this.listeners = { onUpdate, onAddFunction };
+
+        /** @type {FunctionItemView[]} */
+        this.functionItems = [];
         this.initializeViews();
     }
 
@@ -18,25 +19,26 @@ export class FunctionsInterfaceController {
             }
         };
 
-        this.views.buttons.adding.addEventListener("click", () => this.addFunction());
+        this.views.buttons.adding.addEventListener("click", () => this.listeners.onAddFunction());
     }
 
-    addFunction() {
-        const functionItem = this.manager.addFunction();
-
+    addFunction({ id, onDelete, onInput }) {
         const functionItemView = new FunctionItemView({
-            onDelete: () => {
-                console.log("A function is bound to be deleted");
-                this.onUpdate();
-            },
-            onInput: (content) => {
-                functionItem.graph.expression.updateExpression(content);
-                console.log(`A function has updated its content: ${content}`);
-                this.onUpdate();
-            }
+            id,
+            onDelete: () => onDelete(),
+            onInput: (content) => onInput(content)
         });
 
         this.views.listContainer.appendChild(functionItemView.element);
+        this.functionItems.push(functionItemView);
+    }
+
+    removeFunction({ id }) {
+        const selectedFunctionIndex = this.functionItems.findIndex(func => func.id === id);
+        if(selectedFunctionIndex != -1) {
+            this.functionItems[selectedFunctionIndex].destroy();
+            this.functionItems.splice(selectedFunctionIndex, 1);
+        }
     }
 }
 

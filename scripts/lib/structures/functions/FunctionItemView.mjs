@@ -1,26 +1,32 @@
-import { makeDivElement, makeInputElement } from "../../utils/element.mjs";
+import { makeButtonElement, makeDivElement, makeInputElement } from "../../utils/element.mjs";
 
 
 export class FunctionItemView {
-    constructor({ onDelete, onInput }) {
+    constructor({ id, onDelete, onInput }) {
+        this.id = id;
         this.listeners = { onDelete, onInput };
 
         this.initializeView();
     }
 
     initializeView() {
-        const functionItemView = {
-            wrapper: makeDivElement({ className: "function-item-wrapper" }),
-            input: makeInputElement({ className: "function-item-input" })
-        };
+        const wrapper = makeDivElement({ className: "function-item-wrapper", id: this.id });
+        const input = makeInputElement({ className: "function-item-input" });
+        const removeBtn = makeButtonElement({ className: "function-item-removebtn", content: "X" });
+    
 
-        functionItemView.input.addEventListener("input", () => {
-            const content = functionItemView.input.value;
+        input.addEventListener("input", () => {
+            const content = input.value;
             this.listeners.onInput(content);
         });
 
-        functionItemView.wrapper.append(functionItemView.input);
+        removeBtn.addEventListener("click", () => this.listeners.onDelete() );
 
-        this.element = functionItemView.wrapper;
+        wrapper.append(input, removeBtn);
+        this.element = wrapper;
+    }
+
+    destroy() {
+        this.element.parentElement.removeChild(this.element);
     }
 }
