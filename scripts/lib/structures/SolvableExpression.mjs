@@ -10,6 +10,8 @@ export class SolvableExpression {
         /** @private */
         this.root_token = root_token;
 
+        this.error = null;
+
         this.originalString = originalString;
     }
 
@@ -19,14 +21,24 @@ export class SolvableExpression {
      * @returns {number}
      * */
     solve(variables = {}) {
-        return solveExpression(this.root_token, variables);
+        try {
+            return solveExpression(this.root_token, variables);
+        } catch(e) {
+            this.error = e;
+            return undefined;
+        }
     }
 
 
     updateExpression(expression_string) {
-        const newVersion = SolvableExpression.fromString(expression_string);
-        this.root_token = newVersion.root_token;
-        this.originalString = newVersion.originalString;
+        this.originalString = expression_string;
+        try {
+            const newVersion = SolvableExpression.fromString(expression_string);
+            this.root_token = newVersion.root_token;
+        } catch(e) {
+            this.error = e;
+            this.root_token = undefined;
+        }
     }
 
 

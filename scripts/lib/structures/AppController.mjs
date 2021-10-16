@@ -1,11 +1,17 @@
+import { $ } from "../utils/element.mjs";
 import { ExtendedArray } from "./data/ExtendedArray.mjs";
 import { FunctionItem } from "./functions/FunctionItem.mjs";
 import { FunctionsInterfaceController } from "./functions/FunctionsInterfaceController.mjs";
+import { Grapher } from "./graph/Grapher.mjs";
+import { ViewSettings } from "./graph/ViewSettings.mjs";
 
 
 export class AppController {
     constructor() {
+
+        /** @type {FunctionItem[]} */
         this.functions = new ExtendedArray();
+        this.initializeGrapher();
         this.initializeControllers();
     }
 
@@ -46,7 +52,16 @@ export class AppController {
         };
     }
 
+    initializeGrapher() {
+        this.grapher = new Grapher({
+            canvas: $("#graph-canvas"),
+            viewSettings: new ViewSettings()
+        });
+    }
+
     update() {
+        const graphs = this.functions.map(func => func.graph);
+        this.grapher.render(graphs);
         console.log("App controller has reported changes");
     }
 }

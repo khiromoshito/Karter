@@ -1,7 +1,7 @@
 import { getGridXYValues } from "./plotter.mjs";
 import { translatePoint, translateX, translateY } from "./translator.mjs";
 
-
+/** @param {{ view: ViewSettings }} param0 */
 export function drawGridLines({ canvas, view }) {
     const ctx = canvas.getContext("2d");
     const canvasWidth = canvas.width;
@@ -22,7 +22,10 @@ export function drawGridLines({ canvas, view }) {
         ctx.stroke();
     }
 
-    const { bounds: viewBounds, position: offset, scale } = view;
+    const viewBounds = view.getBounds({ canvasHeight, canvasWidth });
+    const scale = view.getScale({ canvasWidth });
+    const offset = view.position;
+    
     const gridValues = getGridXYValues(viewBounds);
 
 
@@ -62,7 +65,10 @@ export function drawGraph({ graph, canvas, view }) {
     const ctx = canvas.getContext("2d");
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
-    const { bounds: viewBounds, position: offset, scale } = view;
+
+    const viewBounds = view.getBounds({ canvasHeight, canvasWidth });
+    const scale = view.getScale({ canvasWidth });
+    const offset = view.position;
 
     const color = graph.color;
     const points = graph.plotFromXBounds(viewBounds.x1, viewBounds.x2);

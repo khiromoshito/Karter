@@ -1,5 +1,5 @@
 import { pickRandomColor } from "../../utils/misc.mjs";
-import { Graph } from "../Graph.mjs";
+import { Graph } from "../graph/Graph.mjs";
 import { SolvableExpression } from "../SolvableExpression.mjs";
 
 export class FunctionItem {

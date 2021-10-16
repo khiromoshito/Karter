@@ -1,5 +1,5 @@
-import { plotGraphPoints, plotGraphPointsFromXValues } from "../graph/plotter.mjs";
-import { SolvableExpression } from "./SolvableExpression.mjs";
+import { plotGraphPoints, plotGraphPointsFromXValues } from "../../graph/plotter.mjs";
+
 
 
 /** Represents an instance of a graph */
