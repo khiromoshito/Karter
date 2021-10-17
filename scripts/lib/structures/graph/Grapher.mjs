@@ -1,4 +1,5 @@
 import { drawGraph, drawGridLines } from "../../graph/grapher.mjs";
+import { ViewSettings } from "./ViewSettings.mjs";
 
 export class Grapher {
 
@@ -8,7 +9,7 @@ export class Grapher {
         this.viewSettings = viewSettings;
     }
 
-    render(graphs) {
+    render(graphs = []) {
         drawGridLines({ canvas: this.canvas, view: this.viewSettings });
 
         for(const graph of graphs) {

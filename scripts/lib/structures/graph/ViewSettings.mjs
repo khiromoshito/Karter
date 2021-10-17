@@ -8,12 +8,15 @@ export class ViewSettings {
         this.zoom = 1;
 
         /** How much to zoom when zooming in or out */
-        this.zoomFactor = 1.2;
+        this.zoomFactor = 1.1;
 
         /** Maximum distance of x bounds when at zoom = 1 */
         this.defaultRange = 20;
         this.position = new Point(0, 0);
     }
+
+    zoomIn() { this.zoom /= this.zoomFactor; return this.zoom; }
+    zoomOut() { this.zoom *= this.zoomFactor; return this.zoom; }
 
     update({ zoom, defaultRange, position }) {
         if(zoom) this.zoom = zoom;

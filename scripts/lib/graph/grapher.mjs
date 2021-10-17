@@ -9,12 +9,12 @@ export function drawGridLines({ canvas, view }) {
 
     const gridLineStyle = {
         color: "#333333",
-        axisColor: "#a0a0a0",
+        axisColor: "#5a5a5a",
         width: 1.5
     };
 
-    function drawGridLine(from, to) {
-        ctx.strokeStyle = gridLineStyle.color;
+    function drawGridLine(from, to, { isAxis } = { isAxis: false }) {
+        ctx.strokeStyle = isAxis ? gridLineStyle.axisColor : gridLineStyle.color;
         ctx.lineWidth = gridLineStyle.width;
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
@@ -36,23 +36,34 @@ export function drawGridLines({ canvas, view }) {
     };
 
 
-    console.log(gridValuesPairs.y);
-
-
     // Clear canvas
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+
+    let xAxis;
+    let yAxis;
 
 
     // Draw grid lines
     for(let gridX of gridValuesPairs.x) {
         const x = gridX.relative;
-        drawGridLine({ x, y: 0 }, { x, y: canvasHeight });
+        const isAxis = gridX.absolute === 0;
+        
+        if(isAxis) xAxis = gridX; else
+        drawGridLine({ x, y: 0 }, { x, y: canvasHeight }, { isAxis });
     }
+
 
     for(let gridY of gridValuesPairs.y) {
         const y = gridY.relative;
-        drawGridLine({ x: 0, y }, { x: canvasWidth, y });
+        const isAxis = gridY.absolute === 0;
+
+        if(isAxis) yAxis = gridY; else
+        drawGridLine({ x: 0, y }, { x: canvasWidth, y }, { isAxis });
     }
+
+    if(xAxis) drawGridLine({ x: xAxis.relative, y: 0 }, { x: xAxis.relative, y: canvasHeight }, {isAxis: true});
+    if(yAxis) drawGridLine({ x: 0, y: yAxis.relative }, { x: canvasWidth, y: yAxis.relative }, { isAxis: true });
 
     // Draw side rules
     drawSideRules({ canvas, valuesPairs: gridValuesPairs });
@@ -62,6 +73,8 @@ export function drawGridLines({ canvas, view }) {
 
 
 export function drawGraph({ graph, canvas, view }) {
+    if(!graph) return;
+
     const ctx = canvas.getContext("2d");
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
@@ -80,16 +93,21 @@ export function drawGraph({ graph, canvas, view }) {
     ctx.beginPath();
     for(let i = 0; i < points.length; i++) {
         const point = points[i];
+        if(!point) continue;
+
         const {x, y} = translatePoint(point, { offset, canvasHeight, canvasWidth, scale });
-        if(i === 0) {
-            ctx.moveTo(x, y);
-        } else {
-            ctx.lineTo(x, y);
-        }
+
+        let isPreviousPointUndefined = i === 0 || points[i-1] === undefined;
+        let isNextPointUndefined = i === points.length-1 || points[i+1] === undefined;
+
+        if(isPreviousPointUndefined) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+
+        if(isNextPointUndefined) ctx.stroke();
+
     }
 
 
-    ctx.stroke();
 }
 
 

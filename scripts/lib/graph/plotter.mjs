@@ -1,4 +1,4 @@
-import { GraphConfig } from "../structures/GraphConfig.mjs";
+import { GraphConfig } from "../structures/graph/GraphConfig.mjs";
 import { Point } from "../structures/Point.mjs";
 import { SolvableExpression } from "../structures/SolvableExpression.mjs";
 
@@ -14,7 +14,11 @@ export function plotGraphPoints({ expression, config }) {
     return plotGraphPointsFromXValues({ expression, config, xValues });
 }
 
+/** @param {{ expression: SolvableExpression, xValues: number[] }} param0 */
 export function plotGraphPointsFromXValues({ expression, xValues }) {
+
+    if(expression.error || !expression.root_token) return [];
+
     /** @type {Point[]} */
     const points = [];
 
@@ -65,8 +69,6 @@ export function getGridXYValues({x1, x2, y1, y2}) {
 
     const startX = Math.floor(x1 / interval) * interval;
     const startY = Math.floor(y1 / interval) * interval;
-
-    console.log({maxRange, interval, startX, startY});
 
     const values = { x: [], y: [] };
 

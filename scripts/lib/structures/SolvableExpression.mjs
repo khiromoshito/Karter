@@ -6,8 +6,6 @@ import { solveExpression } from "../expression/solver.mjs";
 export class SolvableExpression {
 
     constructor(root_token, originalString) {
-
-        /** @private */
         this.root_token = root_token;
 
         this.error = null;
@@ -21,10 +19,13 @@ export class SolvableExpression {
      * @returns {number}
      * */
     solve(variables = {}) {
+        if(!this.root_token) return undefined;
+
         try {
-            return solveExpression(this.root_token, variables);
+            let solution = solveExpression(this.root_token, variables);
+            if((solution !== 0 && !solution) || solution === Infinity) solution = undefined;
+            return solution;
         } catch(e) {
-            this.error = e;
             return undefined;
         }
     }
@@ -35,6 +36,7 @@ export class SolvableExpression {
         try {
             const newVersion = SolvableExpression.fromString(expression_string);
             this.root_token = newVersion.root_token;
+            this.error = undefined;
         } catch(e) {
             this.error = e;
             this.root_token = undefined;

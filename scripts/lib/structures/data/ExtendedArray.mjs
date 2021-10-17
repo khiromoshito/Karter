@@ -8,7 +8,7 @@ export class ExtendedArray extends Array {
 
     remove(item) {
         const itemIndex = this.findIndex(i => i === item);
-        if(itemIndex) this.splice(itemIndex, 1);
+        if(itemIndex !== -1) this.splice(itemIndex, 1);
     }
 
     removeAt(index) {
