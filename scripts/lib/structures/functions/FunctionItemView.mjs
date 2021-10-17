@@ -43,11 +43,16 @@ export class FunctionItemView {
     }
 
     update() {
-        const { wrapper, colorDisplay } = this.elements;
+        const { wrapper, colorDisplay, visibilityBtn } = this.elements;
         const func = this.functionItem;
 
-        if(!func.isVisible) wrapper.classList.add("invisible");
-        else wrapper.classList.remove("invisible");
+        if(!func.isVisible) {
+            wrapper.classList.add("invisible");
+            visibilityBtn.title = "Unhide";
+        } else {
+            wrapper.classList.remove("invisible");
+            visibilityBtn.title = "Hide";
+        }
 
         colorDisplay.style.backgroundColor = this.functionItem.color;
     }

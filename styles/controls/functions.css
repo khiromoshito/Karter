@@ -32,8 +32,12 @@
 }
 
 .function-item-right-inner {
-    width: 65px;
+    width: 70px;
     height: 30px;
+}
+
+.function-item-wrapper:not(:hover) .function-item-right-inner {
+    opacity: 0;
 }
 
 .function-item-center {
@@ -70,6 +74,10 @@
     letter-spacing: 1.5px;
 }
 
+.function-item-wrapper.invisible {
+    opacity: 0.55;
+}
+
 .function-item-visibilitybtn,
 .function-item-removebtn {
     height: 30px;
@@ -91,7 +99,7 @@
 
 .function-item-wrapper.invisible .function-item-visibilitybtn {
     background-image: url("../../assets/icons/eye-off.png");
-    opacity: 0.1;
+    /* opacity: 0.1; */
 }
 
 .function-item-removebtn {
