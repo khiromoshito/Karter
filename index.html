@@ -5,15 +5,54 @@
             background-color: #1A1A1A;
             border: none;
         }
-    
-    
+
+        body {
+            margin: 0;
+            color: #e0e0e0;
+            background-color: #1A1A1A;
+            overflow-y: hidden;
+        }
+
+        body.loading .sections {
+            visibility: hidden;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .loading-screen {
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            transition: 500ms ease;
+            transition-delay: 300ms;
+            background-color: #1A1A1A;
+        }
+
+        .loading-screen div {
+            margin: auto;
+            font-size: 20px;
+        }
+
+        body:not(.loading) .loading-screen {
+            opacity: 0;
+            pointer-events: none;
+        }
     </style>
 
     <link rel="stylesheet" href="./styles/main.css">
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/controls/functions.css">
 </head>
-<body>
+<body class="loading">
+    <div class="loading-screen">
+        <div>Loading Karter...</div>
+    </div>
     <div class="sections">
         <section class="graph-section">
             <div id="graph-touch">

@@ -13,6 +13,9 @@ export class AppController {
 
         // Add one empty function
         this.functions.addFunction();
+
+        setTimeout(() => document.body.classList.remove("loading"), 500);
+        
     }
 
     update() {
