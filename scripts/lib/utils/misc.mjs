@@ -5,7 +5,7 @@ export function pickRandomlyFromList(list) {
 }
 
 export function pickRandomColor() {
-    const colors = [ "#F36565" ];
+    const colors = [ "#F36565", "#3a5f8c", "#754185", "#589c4f", "#d1c647", "#d17547" ];
     return pickRandomlyFromList(colors);
 }
 

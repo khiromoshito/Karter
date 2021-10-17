@@ -5,7 +5,7 @@ import { SolvableExpression } from "../SolvableExpression.mjs";
 export class FunctionItem {
 
     /** @private */
-    static idCounter = 0;
+    static idCounter = 1;
 
     constructor() {
         this.id = FunctionItem.idCounter++;

@@ -104,7 +104,6 @@ export function drawGraph({ graph, canvas, view }) {
         else ctx.lineTo(x, y);
 
         if(isNextPointUndefined) ctx.stroke();
-
     }
 
 

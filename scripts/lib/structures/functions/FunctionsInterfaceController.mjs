@@ -22,15 +22,18 @@ export class FunctionsInterfaceController {
         this.views.buttons.adding.addEventListener("click", () => this.listeners.onAddFunction());
     }
 
-    addFunction({ id, onDelete, onInput }) {
+    addFunction({ functionItem, onDelete, onInput, onToggleVisibility }) {
         const functionItemView = new FunctionItemView({
-            id,
+            functionItem,
             onDelete: () => onDelete(),
-            onInput: (content) => onInput(content)
+            onInput: (content) => onInput(content),
+            onToggleVisibility: () => onToggleVisibility()
         });
 
         this.views.listContainer.appendChild(functionItemView.element);
         this.functionItems.push(functionItemView);
+
+        return functionItemView;
     }
 
     removeFunction({ id }) {

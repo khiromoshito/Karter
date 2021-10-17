@@ -1,6 +1,7 @@
 import { Point } from "../structures/Point.mjs";
 
 export function translatePoint(point, { offset, canvasHeight, canvasWidth, scale }) {
+
     const relativePoint = new Point((point.x - offset.x)*scale, (point.y - offset.y)*scale);
     const canvasX = relativePoint.x + canvasWidth/2;
     const canvasY = -relativePoint.y + canvasHeight/2;

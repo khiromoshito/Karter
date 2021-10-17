@@ -30,6 +30,7 @@ export class GraphInterfaceController {
         };
 
         element.addEventListener("mousedown", (e) => {
+            if(e.button !== 0) return;
             origin = new Point(e.clientX, e.clientY);
 
             element.addEventListener("mousemove", dragListener);

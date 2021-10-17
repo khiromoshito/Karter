@@ -1,26 +1,27 @@
 
-export function makeElement(tag, { className, id, content }) {
+export function makeElement(tag, { className, id, content, events }) {
     const element = document.createElement(tag);
     if(className) element.setAttribute("class", className);
     if(id) element.id = id;
     if(content) element.innerHTML = content;
+    if(events) for(const eventName in events) element.addEventListener(eventName, events[eventName]);
 
     return element;
 }
 
 /** @returns {HTMLDivElement} */
-export function makeDivElement({ className, id }) {
-    return makeElement("div", { className, id });
+export function makeDivElement(options) {
+    return makeElement("div", options);
 }
 
 /** @returns {HTMLInputElement} */
-export function makeInputElement({ className, id }) {
-    return makeElement("input", { className, id });
+export function makeInputElement(options) {
+    return makeElement("input", options);
 }
 
 /** @returns {HTMLButtonElement} */
-export function makeButtonElement({ className, id, content }) {
-    return makeElement("button", { className, id, content });
+export function makeButtonElement(options) {
+    return makeElement("button", options);
 }
 
 /** @returns {HTMLElement} */

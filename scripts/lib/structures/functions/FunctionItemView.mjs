@@ -1,29 +1,61 @@
 import { makeButtonElement, makeDivElement, makeInputElement } from "../../utils/element.mjs";
+import { FunctionItem } from "./FunctionItem.mjs";
 
 
 export class FunctionItemView {
-    constructor({ id, onDelete, onInput }) {
-        this.id = id;
-        this.listeners = { onDelete, onInput };
+    constructor({ functionItem, onDelete, onInput, onToggleVisibility }) {
+        this.id = functionItem.id;
+        this.listeners = { onDelete, onInput, onToggleVisibility };
+
+        /** @type {FunctionItem} */
+        this.functionItem = functionItem;
+
+        /** @type {{ wrapper: HTMLDivElement, colorDisplay: HTMLDivElement, input: HTMLInputElement, removeBtn: HTMLButtonElement }} */
+        this.elements = {};
 
         this.initializeView();
     }
 
     initializeView() {
-        const wrapper = makeDivElement({ className: "function-item-wrapper", id: this.id });
-        const input = makeInputElement({ className: "function-item-input" });
-        const removeBtn = makeButtonElement({ className: "function-item-removebtn", content: "X" });
-    
+        this.elements = {
+            wrapper: makeDivElement({ 
+                className: "function-item-wrapper", id: this.id }),
 
-        input.addEventListener("input", () => {
-            const content = input.value;
-            this.listeners.onInput(content);
-        });
+            colorDisplay: makeDivElement({ className: "function-item-color-wrapper", content: this.functionItem.color }),
+            
+            input: makeInputElement({ className: "function-item-input",
+                events: { 
+                    input: () => {
+                        const content = input.value;
+                        this.listeners.onInput(content);
+                    }
+                }
+            }),
 
-        removeBtn.addEventListener("click", () => this.listeners.onDelete() );
+            visibilityBtn: makeButtonElement({
+                className: "function-item-visibilitybtn", content: "V",
+                events: { click: () => this.listeners.onToggleVisibility() }
+            }),
 
-        wrapper.append(input, removeBtn);
+            removeBtn: makeButtonElement({ 
+                className: "function-item-removebtn", content: "X",
+                events: { click: () => this.listeners.onDelete() } })
+        };
+
+        const { wrapper, colorDisplay, input, visibilityBtn, removeBtn } = this.elements;
+
+        wrapper.append(colorDisplay, input, visibilityBtn, removeBtn);
         this.element = wrapper;
+    }
+
+    update() {
+        const { wrapper, colorDisplay } = this.elements;
+        const func = this.functionItem;
+
+        if(!func.isVisible) wrapper.classList.add("invisible");
+        else wrapper.classList.remove("invisible");
+
+        colorDisplay.innerHTML = func.color;
     }
 
     destroy() {
