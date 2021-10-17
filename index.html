@@ -1,20 +1,58 @@
-
-<div id="graph-touch">
-    <canvas id="graph-canvas" height="600px" width="800px"></canvas>
-</div>
-<br>
-
-<style>
-    #graph-canvas {
-        border: 1px solid gray;
-        height: 600px;
-        width: 800px;
-        background-color: #202020;
-    }
-
+<head>
+    <style>
+        #graph-canvas {
+            border: 1px solid gray;
+            background-color: #1A1A1A;
+            border: none;
+        }
     
-</style>
+    
+    </style>
 
-<script type="module" src="scripts/main.mjs"></script>
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/controls/functions.css">
+</head>
+<body>
+    <div class="sections">
+        <section class="graph-section">
+            <div id="graph-touch">
+                <canvas id="graph-canvas" height="600px" width="800px"></canvas>
+            </div>
+        </section>
+        <section class="controls-section">
+            <section class="functions-section">
+                <header>
+                    <h2>Functions</h2>
+                </header>
+                <div id="functions-list">
+                    <div class="function-item-wrapper prototype">
+                        <section class="function-item-side">
+                            <div class="function-item-color-wrapper">
+                                <div class="function-item-color-preview"></div>
+                            </div>
+                        </section>
+                        <section class="function-item-center">
+                            <input spellcheck="false" class="function-item-input" placeholder="f(x) =">
+                        </section>
+                        <section class="function-item-side">
+                            <div class="function-item-right-inner">
+                                <button class="function-item-visibilitybtn"></button>
+                                <button class="function-item-removebtn"></button>
+                            </div>
+                            
+                        </section>
+                    </div>
+                </div>
+                <footer>
+                    <button id="functions-addbtn" class="standard-btn with-icon">
+                        <img src="assets/icons/plus.png">
+                        ADD FUNCTION</button>
+                </footer>
+            </section>
+            
+        </section>
+    </div>
 
-<button id="functions-addbtn">ADD FUNCTION</button>
+    <script type="module" src="scripts/main.mjs"></script>
+</body>

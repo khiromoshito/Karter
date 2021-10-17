@@ -13,7 +13,7 @@ export class FunctionsInterfaceController {
 
     initializeViews() {
         this.views = {
-            listContainer: $("body"),
+            listContainer: $("#functions-list"),
             buttons: {
                 adding: $("#functions-addbtn")
             }

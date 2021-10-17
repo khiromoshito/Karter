@@ -1,13 +1,6 @@
 import { $ } from "../utils/element.mjs";
-import { ExtendedArray } from "./data/ExtendedArray.mjs";
-import { FunctionItem } from "./functions/FunctionItem.mjs";
-import { FunctionsInterfaceController } from "./functions/FunctionsInterfaceController.mjs";
 import { FunctionsManager } from "./functions/FunctionsManager.mjs";
-import { Grapher } from "./graph/Grapher.mjs";
 import { GraphingManager } from "./graph/GraphingManager.mjs";
-import { GraphInterfaceController } from "./graph/GraphInterfaceController.mjs";
-import { ViewSettings } from "./graph/ViewSettings.mjs";
-import { Point } from "./Point.mjs";
 
 
 export class AppController {
@@ -16,7 +9,7 @@ export class AppController {
             onUpdate: () => this.update()
         });
 
-        this.graphs = new GraphingManager({ canvas: $("#graph-canvas") });
+        this.graphs = new GraphingManager({ canvas: this.prepareCanvas() });
 
         // Add one empty function
         this.functions.addFunction();
@@ -24,5 +17,19 @@ export class AppController {
 
     update() {
         this.graphs.updateGraphs(this.functions.getVisibleGraphs());
+    }
+
+    prepareCanvas() {
+        /** @type {HTMLCanvasElement} */
+        const canvas = $("#graph-canvas");
+        const { innerHeight: height, innerWidth: width } = window;
+
+        const widthProportion = 73/100;
+        const canvasWidth = width*widthProportion;
+
+        canvas.height = height;
+        canvas.width = canvasWidth;
+
+        return canvas;
     }
 }

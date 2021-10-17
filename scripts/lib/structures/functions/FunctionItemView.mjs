@@ -1,8 +1,10 @@
-import { makeButtonElement, makeDivElement, makeInputElement } from "../../utils/element.mjs";
+import { $, makeButtonElement, makeDivElement, makeInputElement } from "../../utils/element.mjs";
 import { FunctionItem } from "./FunctionItem.mjs";
 
 
 export class FunctionItemView {
+    static rawInstance = $(".function-item-wrapper.prototype").innerHTML;
+
     constructor({ functionItem, onDelete, onInput, onToggleVisibility }) {
         this.id = functionItem.id;
         this.listeners = { onDelete, onInput, onToggleVisibility };
@@ -17,35 +19,27 @@ export class FunctionItemView {
     }
 
     initializeView() {
+        const wrapper = makeDivElement({ className: "function-item-wrapper", id: this.id });
+        wrapper.innerHTML = FunctionItemView.rawInstance;
+
         this.elements = {
-            wrapper: makeDivElement({ 
-                className: "function-item-wrapper", id: this.id }),
-
-            colorDisplay: makeDivElement({ className: "function-item-color-wrapper", content: this.functionItem.color }),
-            
-            input: makeInputElement({ className: "function-item-input",
-                events: { 
-                    input: () => {
-                        const content = input.value;
-                        this.listeners.onInput(content);
-                    }
-                }
-            }),
-
-            visibilityBtn: makeButtonElement({
-                className: "function-item-visibilitybtn", content: "V",
-                events: { click: () => this.listeners.onToggleVisibility() }
-            }),
-
-            removeBtn: makeButtonElement({ 
-                className: "function-item-removebtn", content: "X",
-                events: { click: () => this.listeners.onDelete() } })
+            wrapper,
+            colorDisplay: $(".function-item-color-preview", wrapper),
+            input: $(".function-item-input", wrapper),
+            visibilityBtn: $(".function-item-visibilitybtn", wrapper),
+            removeBtn: $(".function-item-removebtn", wrapper)
         };
 
-        const { wrapper, colorDisplay, input, visibilityBtn, removeBtn } = this.elements;
+        this.elements.input.addEventListener("input", () => {
+            const content = this.elements.input.value;
+            this.listeners.onInput(content);
+        });
 
-        wrapper.append(colorDisplay, input, visibilityBtn, removeBtn);
+        this.elements.visibilityBtn.addEventListener("click", ()=>this.listeners.onToggleVisibility());
+        this.elements.removeBtn.addEventListener("click", ()=>this.listeners.onDelete());
+
         this.element = wrapper;
+        this.update();
     }
 
     update() {
@@ -55,7 +49,7 @@ export class FunctionItemView {
         if(!func.isVisible) wrapper.classList.add("invisible");
         else wrapper.classList.remove("invisible");
 
-        colorDisplay.innerHTML = func.color;
+        colorDisplay.style.backgroundColor = this.functionItem.color;
     }
 
     destroy() {

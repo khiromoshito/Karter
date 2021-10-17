@@ -1,0 +1,109 @@
+.functions-section h2 {
+    color: #f0f0f0;
+    font-weight: 300;
+}
+
+#functions-list {
+    margin-bottom: 20px;
+}
+
+.functions-section footer {
+    text-align: right;
+}
+
+.function-item-wrapper {
+    width: 100%;
+    background-color: #1d1d1d;
+
+    border: #343434 1.5px solid;
+    border-radius: 5px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3px 5px;
+    margin-bottom: 10px;
+    height: 45px;
+}
+
+.function-item-side {
+    flex-basis: content;
+}
+
+.function-item-right-inner {
+    width: 65px;
+    height: 30px;
+}
+
+.function-item-center {
+    flex: auto;
+}
+
+.function-item-color-wrapper {
+    padding: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.function-item-color-wrapper:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 7px;
+}
+
+.function-item-color-preview {
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    background-color: #F36565;
+}
+
+.function-item-input {
+    background-color: transparent;
+    transform: translateY(3px);
+    border: none;
+    font-size: 17px;
+    font-family: Math;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    letter-spacing: 1.5px;
+}
+
+.function-item-visibilitybtn,
+.function-item-removebtn {
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+
+    background-size: 16px 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    opacity: 0.2;
+}
+
+.function-item-visibilitybtn {
+    background-image: url("../../assets/icons/eye.png");
+}
+
+.function-item-wrapper.invisible .function-item-visibilitybtn {
+    background-image: url("../../assets/icons/eye-off.png");
+    opacity: 0.1;
+}
+
+.function-item-removebtn {
+    background-image: url("../../assets/icons/x.png");
+}
+
+.function-item-visibilitybtn:hover,
+.function-item-removebtn:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.function-item-visibilitybtn:active,
+.function-item-removebtn:active {
+    transform: scale(0.93);
+}

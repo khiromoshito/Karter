@@ -24,7 +24,9 @@ export function makeButtonElement(options) {
     return makeElement("button", options);
 }
 
+
 /** @returns {HTMLElement} */
-export function $(selector) {
-    return document.querySelector(selector);
+export function $(selector, root) {
+    if(!root) root = document;
+    return root.querySelector(selector);
 }
